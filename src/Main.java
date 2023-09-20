@@ -52,14 +52,14 @@ public class Main {
                 case 3: {
                     int accountChoice;
                     do {
-                    System.out.println("Vilket konto vill du sätta in pengar på?");
-                    System.out.println("Tillgängliga konton:");
-                    for (int i = 0; i < accounts.size(); i++) {
-                        System.out.println((i + 1) + ". " + accounts.get(i).getName());
-                    }
+                        System.out.println("Vilket konto vill du sätta in pengar på?");
+                        System.out.println("Tillgängliga konton:");
+                        for (int i = 0; i < accounts.size(); i++) {
+                            System.out.println((i + 1) + ". " + accounts.get(i).getName());
+                        }
 
-                    System.out.print("Välj ett konto (1-" + accounts.size() + "): ");
-                    accountChoice = sc.nextInt();
+                        System.out.print("Välj ett konto (1-" + accounts.size() + "): ");
+                        accountChoice = sc.nextInt();
                         if (accountChoice < 1 || accountChoice > accounts.size()) {
                             System.out.println("Ogiltigt val. Försök igen! 😊");
                         }
@@ -89,24 +89,33 @@ public class Main {
                         }
                     } while (accountChoice < 1 || accountChoice > accounts.size());
 
-                    System.out.print("Ange belopp du vill ta ut: ");
-                    double userWithdraw = sc.nextDouble();
-                    accounts.get(accountChoice - 1).withdraw(userWithdraw);
 
-                    System.out.println("Uppdaterat saldo för " + accounts.get(accountChoice - 1).getName() + ": " + accounts.get(accountChoice - 1).getBalance());
-                    System.out.println();
+                    double userWithdraw;
+                    do {
+                        System.out.print("Ange belopp du vill ta ut: ");
+                        userWithdraw = sc.nextDouble();
+
+                        if (userWithdraw < 0 || userWithdraw > accounts.get(accountChoice - 1).getBalance()) {
+                            System.out.println("Ogiltigt belopp eller inte tillräckligt med saldo på kontot.");
+                        } else {
+                            accounts.get(accountChoice - 1).withdraw(userWithdraw);
+                            System.out.println("Uppdaterat saldo för " + accounts.get(accountChoice - 1).getName() + ": " + accounts.get(accountChoice - 1).getBalance());
+                        }
+                        System.out.println();
+                    } while (userWithdraw < 0 || userWithdraw > accounts.get(accountChoice - 1).getBalance());
+
                     break;
                 }
                 case 5: {
                     int accountChoice, accountChoice2;
                     do {
-                    System.out.println("Vilket konto vill du flytta pengar ifrån?");
-                    for (int i = 0; i < accounts.size(); i++) {
-                        System.out.println((i + 1) + ". " + accounts.get(i).getName() + " Saldo: " + accounts.get(i).getBalance());
-                        ;
-                    }
-                    System.out.print("Välj ett konto (1-" + accounts.size() + "): ");
-                    accountChoice = sc.nextInt();
+                        System.out.println("Vilket konto vill du flytta pengar ifrån?");
+                        for (int i = 0; i < accounts.size(); i++) {
+                            System.out.println((i + 1) + ". " + accounts.get(i).getName() + " Saldo: " + accounts.get(i).getBalance());
+                            ;
+                        }
+                        System.out.print("Välj ett konto (1-" + accounts.size() + "): ");
+                        accountChoice = sc.nextInt();
 
                         if (accountChoice < 1 || accountChoice > accounts.size()) {
                             System.out.println("Ogiltigt val. Försök igen! 😊");
@@ -115,36 +124,45 @@ public class Main {
                     } while (accountChoice < 1 || accountChoice > accounts.size());
 
                     do {
-                    System.out.println("Vilket konto vill du flytta pengar till?");
-                    for (int i = 0; i < accounts.size(); i++) {
-                        System.out.println((i + 1) + ". " + accounts.get(i).getName() + " Saldo: " + accounts.get(i).getBalance());
-                        ;
-                    }
-                    System.out.print("Välj ett konto (1-" + accounts.size() + "): ");
-                    accountChoice2 = sc.nextInt();
+                        System.out.println("Vilket konto vill du flytta pengar till?");
+                        for (int i = 0; i < accounts.size(); i++) {
+                            System.out.println((i + 1) + ". " + accounts.get(i).getName() + " Saldo: " + accounts.get(i).getBalance());
+                            ;
+                        }
+                        System.out.print("Välj ett konto (1-" + accounts.size() + "): ");
+                        accountChoice2 = sc.nextInt();
 
                         if (accountChoice2 < 1 || accountChoice2 > accounts.size()) {
                             System.out.println("Ogiltigt val. Försök igen! 😊");
                         }
                     } while (accountChoice2 < 1 || accountChoice2 > accounts.size());
-                    System.out.print("Ange belopp att flytta: ");
-                    double userWithdraw = sc.nextDouble();
-                    accounts.get(accountChoice - 1).withdraw(userWithdraw);
 
-                    double userDeposit = userWithdraw;
-                    accounts.get(accountChoice2 - 1).deposit(userDeposit);
+                    double userWithdraw;
+                    do {
+                        System.out.print("Ange belopp att flytta: ");
+                        userWithdraw = sc.nextDouble();
+                        accounts.get(accountChoice - 1).withdraw(userWithdraw);
+                        if (userWithdraw < 0 || userWithdraw > accounts.get(accountChoice - 1).getBalance()) {
+                            System.out.println("Ogiltigt belopp eller inte tillräckligt med saldo på kontot.");
 
-                    System.out.println("Uppdaterat saldo för " + accounts.get(accountChoice - 1).getName() + ": " + accounts.get(accountChoice - 1).getBalance());
-                    System.out.println("Uppdaterat saldo för " + accounts.get(accountChoice2 - 1).getName() + ": " + accounts.get(accountChoice2 - 1).getBalance());
-                    System.out.println();
-                    break;
+                        } else {
+                            double userDeposit = userWithdraw;
+                            accounts.get(accountChoice2 - 1).deposit(userDeposit);
+
+                            System.out.println("Uppdaterat saldo för " + accounts.get(accountChoice - 1).getName() + ": " + accounts.get(accountChoice - 1).getBalance());
+                            System.out.println("Uppdaterat saldo för " + accounts.get(accountChoice2 - 1).getName() + ": " + accounts.get(accountChoice2 - 1).getBalance());
+                            System.out.println();
+                            break;
+
+                        }
+
+
+                    } while (userWithdraw < 0 || userWithdraw > accounts.get(accountChoice - 1).getBalance());
+
 
                 }
 
-
             }
-
-
         } while (choice != 6);
     }
 }
