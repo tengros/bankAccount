@@ -32,18 +32,21 @@ public class Main {
                     Account newAccount = new Account(0, input);
                     accounts.add(newAccount);
 
-                    System.out.println("Skapade konton:");
+                    System.out.println("Skapat konto:");
+                    Account latestAccount = accounts.get(accounts.size() - 1);
+                    System.out.println("Kontonamn: " + latestAccount.getName() + ", Saldo: " + latestAccount.getBalance());
+                    System.out.println();
+                    break;
+
+                }
+                case 2: {
+                    System.out.println("Aktuella konton:");
                     for (Account account : accounts) {
                         System.out.println("Kontonamn: " + account.getName() + ", " + " Saldo: " + account.getBalance());
                         System.out.println();
                     }
                     break;
-                }
-                case 2: {
 
-                    System.out.println(accounts);
-                    System.out.println();
-                    break;
                 }
 
                 case 3: {
